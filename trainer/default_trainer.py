@@ -68,20 +68,8 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
         # logger.info(f"Pipeline for training: {self.opt['PIPELINE']}")
         # self.pipeline = pipeline_class(self.opt)
 
-        # ref_coco
-        # register_coco_panoptic_annos_caption_grounding_sem_seg("coco_2017_train",
-        #                                                        self.get_metadata(),
-        #                                                        '/content/datasets/my_data_set/coco_train2017',
-        #                                                        '/content/datasets/my_data_set/pan_seg/',
-        #                                                        '/content/datasets/my_data_set/panoptic_train2017.json',
-        #                                                        '/content/datasets/my_data_set/sem_seg/',
-        #                                                        '/content/datasets/my_data_set/captions_train2017.json/',
-        #                                                        '/content/datasets/my_data_set/grounding_train2017.json/',
-        #                                                        '/content/datasets/xdecoder_data/coco/annotations/caption_class_similarity.pth',
-        #                                                        '/content/datasets/my_data_set/coco_train2017.json/',
-        #                                                        )
 
-        # leaves_coco
+
         register_coco_panoptic_annos_caption_grounding_sem_seg("coco_2017_train",
                                                                self.get_metadata(),
                                                                '/content/datasets/DARE/train_images/',
@@ -182,80 +170,80 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
 
         return meta
 
-    def get_dataset(self, ):
-        data_set = []
-        panoptic_gt = 'pan_gt_val.json'  # ['images' --> ['license', 'file_name', 'coco_url', 'height', 'width', 'date_captured', 'flickr_url', 'id']
-        #                                   'annotations' --> ['segments_info' --> ['id', 'category_id', 'iscrowd', 'bbox', 'area'],
-        #                                                      'file_name',
-        #                                                      'image_id']
-        #                                   'categories'] --> ['supercategory', 'isthing', 'id', 'name']
+    # def get_dataset(self, ):
+    #     data_set = []
+    #     panoptic_gt = 'pan_gt_val.json'  # ['images' --> ['license', 'file_name', 'coco_url', 'height', 'width', 'date_captured', 'flickr_url', 'id']
+    #     #                                   'annotations' --> ['segments_info' --> ['id', 'category_id', 'iscrowd', 'bbox', 'area'],
+    #     #                                                      'file_name',
+    #     #                                                      'image_id']
+    #     #                                   'categories'] --> ['supercategory', 'isthing', 'id', 'name']
+    #
+    #     instances_gt = 'ins_gt_val.json'  # ['images' --> ['license', 'file_name', 'coco_url', 'height', 'width', 'date_captured', 'flickr_url', 'id']
+    #     # 'annotations' --> ['bbox', 'category_id', 'image_id', 'id', 'segmentation', 'area']
+    #     # 'categories' --> ['name', 'instance_count', 'def', 'synonyms', 'image_count', 'id', 'frequency', 'synset']
+    #
+    #     with open(instances_gt, 'r') as file_ins:
+    #         json_file_ins = json.load(file_ins)
+    #
+    #     with open(panoptic_gt, 'r') as file_pan:
+    #         json_file_pan = json.load(file_pan)
+    #
+    #     for img in json_file_pan['images']:
+    #         an_img = dict()
+    #         an_img['file_name'] = img['file_name']
+    #         an_img['width'] = img['width']
+    #         an_img['height'] = img['height']
+    #         an_img['image_id'] = img['id']
+    #         an_img[
+    #             'annotations'] = None  # list[dict] --> [{bbox: ?, bbox_mode: ?, category_id:[0, num_categories-1] ?, segmentation: ?, iscrowd: ?}]
+    #         an_img['sem_seg_file_name'] = None  # str
+    #         an_img['pan_seg_file_name'] = None  # str
+    #         an_img['segments_info'] = None  # list[dict] --> [{id: ?, category_id: ?, iscrowd: ?}]
+    #
+    #         the_img_ins_annots = list()
+    #         the_img_ins_annotations_id_counter = 0
+    #         for ins_annot in json_file_ins['annotations']:
+    #             if ins_annot['image_id'] == img['id']:
+    #                 an_ins_annot_for_the_img = dict()
+    #                 an_ins_annot_for_the_img['bbox'] = ins_annot['bbox']
+    #                 an_ins_annot_for_the_img['bbox_mode'] = 1
+    #                 an_ins_annot_for_the_img['category_id'] = the_img_ins_annotations_id_counter
+    #                 an_ins_annot_for_the_img['segmentation'] = ins_annot['segmentation']
+    #                 an_ins_annot_for_the_img['iscrowd'] = 0
+    #                 the_img_ins_annotations_id_counter += 1
+    #                 the_img_ins_annots.append(an_ins_annot_for_the_img)
+    #
+    #         an_img['annotations'] = the_img_ins_annots
+    #         an_img['sem_seg_file_name'] = f'sem_seg_{img["file_name"].split(".")[0]}.png'
+    #         an_img['pan_seg_file_name'] = f'{img["file_name"].split(".")[0]}.png'
+    #
+    #         the_img_pan_segments_info = list()
+    #         the_img_pan_annotations_id_counter = 0
+    #         for annot_pan in json_file_pan['annotations']:
+    #             if annot_pan['image_id'] == img['id']:
+    #                 for seg_info in annot_pan['segments_info']:
+    #                     an_pan_annot_for_the_img = dict()
+    #                     an_pan_annot_for_the_img['id'] = seg_info['id']
+    #                     an_pan_annot_for_the_img['category_id'] = the_img_pan_annotations_id_counter
+    #                     an_pan_annot_for_the_img['iscrowd'] = seg_info['iscrowd']
+    #                     the_img_pan_annotations_id_counter += 1
+    #                     the_img_pan_segments_info.append(an_pan_annot_for_the_img)
+    #         an_img['segments_info'] = the_img_pan_segments_info
+    #
+    #         assert not any([information is None for information in
+    #                         [an_img['segments_info'], an_img['pan_seg_file_name'], an_img['sem_seg_file_name'],
+    #                          an_img['annotations']]])
+    #         data_set.append(an_img)
+    #
+    #     return data_set
 
-        instances_gt = 'ins_gt_val.json'  # ['images' --> ['license', 'file_name', 'coco_url', 'height', 'width', 'date_captured', 'flickr_url', 'id']
-        # 'annotations' --> ['bbox', 'category_id', 'image_id', 'id', 'segmentation', 'area']
-        # 'categories' --> ['name', 'instance_count', 'def', 'synonyms', 'image_count', 'id', 'frequency', 'synset']
-
-        with open(instances_gt, 'r') as file_ins:
-            json_file_ins = json.load(file_ins)
-
-        with open(panoptic_gt, 'r') as file_pan:
-            json_file_pan = json.load(file_pan)
-
-        for img in json_file_pan['images']:
-            an_img = dict()
-            an_img['file_name'] = img['file_name']
-            an_img['width'] = img['width']
-            an_img['height'] = img['height']
-            an_img['image_id'] = img['id']
-            an_img[
-                'annotations'] = None  # list[dict] --> [{bbox: ?, bbox_mode: ?, category_id:[0, num_categories-1] ?, segmentation: ?, iscrowd: ?}]
-            an_img['sem_seg_file_name'] = None  # str
-            an_img['pan_seg_file_name'] = None  # str
-            an_img['segments_info'] = None  # list[dict] --> [{id: ?, category_id: ?, iscrowd: ?}]
-
-            the_img_ins_annots = list()
-            the_img_ins_annotations_id_counter = 0
-            for ins_annot in json_file_ins['annotations']:
-                if ins_annot['image_id'] == img['id']:
-                    an_ins_annot_for_the_img = dict()
-                    an_ins_annot_for_the_img['bbox'] = ins_annot['bbox']
-                    an_ins_annot_for_the_img['bbox_mode'] = 1
-                    an_ins_annot_for_the_img['category_id'] = the_img_ins_annotations_id_counter
-                    an_ins_annot_for_the_img['segmentation'] = ins_annot['segmentation']
-                    an_ins_annot_for_the_img['iscrowd'] = 0
-                    the_img_ins_annotations_id_counter += 1
-                    the_img_ins_annots.append(an_ins_annot_for_the_img)
-
-            an_img['annotations'] = the_img_ins_annots
-            an_img['sem_seg_file_name'] = f'sem_seg_{img["file_name"].split(".")[0]}.png'
-            an_img['pan_seg_file_name'] = f'{img["file_name"].split(".")[0]}.png'
-
-            the_img_pan_segments_info = list()
-            the_img_pan_annotations_id_counter = 0
-            for annot_pan in json_file_pan['annotations']:
-                if annot_pan['image_id'] == img['id']:
-                    for seg_info in annot_pan['segments_info']:
-                        an_pan_annot_for_the_img = dict()
-                        an_pan_annot_for_the_img['id'] = seg_info['id']
-                        an_pan_annot_for_the_img['category_id'] = the_img_pan_annotations_id_counter
-                        an_pan_annot_for_the_img['iscrowd'] = seg_info['iscrowd']
-                        the_img_pan_annotations_id_counter += 1
-                        the_img_pan_segments_info.append(an_pan_annot_for_the_img)
-            an_img['segments_info'] = the_img_pan_segments_info
-
-            assert not any([information is None for information in
-                            [an_img['segments_info'], an_img['pan_seg_file_name'], an_img['sem_seg_file_name'],
-                             an_img['annotations']]])
-            data_set.append(an_img)
-
-        return data_set
-
-    def to_contiguouse_id(self, ):
-        panoptic_gt = 'pan_gt_val.json'
-        with open(panoptic_gt, 'r') as file_pan:
-            json_file_pan = json.load(file_pan)
-
-        # ['categories'] --> ['supercategory', 'isthing', 'id', 'name']
-        return {cat['id']: idx for idx, cat in enumerate(json_file_pan['categories'])}
+    # def to_contiguouse_id(self, ):
+    #     panoptic_gt = 'pan_gt_val.json'
+    #     with open(panoptic_gt, 'r') as file_pan:
+    #         json_file_pan = json.load(file_pan)
+    #
+    #     # ['categories'] --> ['supercategory', 'isthing', 'id', 'name']
+    #     return {cat['id']: idx for idx, cat in enumerate(json_file_pan['categories'])}
 
     def eval(self, ):
         logger.info('-----------------------------------------------')
