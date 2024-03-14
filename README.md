@@ -56,6 +56,11 @@
   - The grounding ground truth JSON file is where we define a sentence or sentences for each segmentation(polygon). Later in the SEEM model, these sentences will be encoded into embeddings using a language encoder. These embeddings will then be combined with vision features to create a unified representation.
   - To produce the panoptic ground truth images accurately, we must identify not just the regions of interest but also include other pixel classes. This entails incorporating generic classes like "wall" or "ceiling" into the specification.
 
+## 4. Train
+
+- Inotder to train the model we need to download pretrained weight of original SEEM
+- pretrained weights should be located in `datasets/xdecoder_data/pretrained` 
+
   
 
 
