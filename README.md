@@ -27,8 +27,11 @@
 
 #### 1-2-3 SEEM:
 
-- SEEM is generally a transformer, which takes three things to perform the segmentation task:<br>
+- SEEM is generally a transformer, which generally takes three type of inputs to perform the segmentation task:<br>
 
   - mask feature
   - multiscale feature
   - embedding of grounding sentences
+  
+- The SEEM transformer comprises four primary components: cross-attention, self-attention, MLP, and prediction head.
+- In original SEEM this module is learnable.
