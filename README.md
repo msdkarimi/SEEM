@@ -25,13 +25,20 @@
 - The main role of this component is to combine the multiscale features derived from the input image by the backbone and produce a feature termed as the mask feature. Subsequently, both this mask feature and the output from the backbone, which consists of multiscale features, are forwarded to the SEEM decoder. 
 - In original SEEM this module is kept frozen.
 
-#### 1-2-3 SEEM:
+#### 1-2-3 SEEM-Decoder:
 
-- SEEM is generally a transformer, which generally takes three type of inputs to perform the segmentation task:<br>
+- SEEM-Decoder is generally a transformer, which generally takes three type of inputs to perform the segmentation task:<br>
 
   - mask feature
   - multiscale feature
   - embedding of grounding sentences
   
 - The SEEM transformer comprises four primary components: cross-attention, self-attention, MLP, and prediction head.
-- In original SEEM this module is learnable.
+- In original SEEM this module is trainable.
+
+## 2 Fine-Tuning
+- To fine-tune the SEEM model, we employed adapters.
+- During this fine-tuning phase, we maintained the SEEM-Decoder in a frozen state, except for the layerNorms. As a result, the only trainable components included the adapters and layerNorms within the SEEM-Decoder.
+- Specifically, we placed one adapter after cross-attention, another following self-attention, and a third after the MLP.
+- Additionally, within the prediction head, we introduced an adapter running parallel to the mask_embedding, which functions as an MLP.
+
