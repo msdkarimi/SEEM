@@ -36,9 +36,25 @@
 - The SEEM transformer comprises four primary components: cross-attention, self-attention, MLP, and prediction head.
 - In original SEEM this module is trainable.
 
-## 2 Fine-Tuning
+## 2. Fine-Tuning
 - To fine-tune the SEEM model, we employed adapters.
 - During this fine-tuning phase, we maintained the SEEM-Decoder in a frozen state, except for the layerNorms. As a result, the only trainable components included the adapters and layerNorms within the SEEM-Decoder.
 - Specifically, we placed one adapter after cross-attention, another following self-attention, and a third after the MLP.
 - Additionally, within the prediction head, we introduced an adapter running parallel to the mask_embedding, which functions as an MLP.
+
+## 3. Dataset
+    
+- Firstly, it's essential to assign a color to each category and indicate whether it represents a "thing" or "stuff." "Thing" refers to categories that can be confined within a closed area, such as a ball or a human, while "stuff" denotes categories that cannot be confined within a closed area, such as the sky
+- We need to use panoptic-api. By means of this API we can easily convert color of each class to a unique number, this number will be used later in classification part of model to understand if pixel is classified correctly or not
+- Another benefit of the panoptic API is that if we have both panoptic ground truth images and a panoptic ground truth JSON file, we can easily create semantic segmentation ground truth images via this API.
+
+- To create dataset for training the model, we generally need four kind of data:
+  
+  - Panoptic segmentation ground truth images
+  - The panoptic JSON file simply outlines the segments-info for each image in the training dataset. These segments-info specify the categories and IDs obtained through the panoptic API, there is not any polygons.
+  - Semantic segmentation ground truth images
+  - The grounding ground truth JSON file is where we define a sentence or sentences for each segmentation(polygon). Later in the SEEM model, these sentences will be encoded into embeddings using a language encoder. These embeddings will then be combined with vision features to create a unified representation. 
+
+  
+
 
