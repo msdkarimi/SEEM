@@ -25,4 +25,10 @@
 - The main role of this component is to combine the multiscale features derived from the input image by the backbone and produce a feature termed as the mask feature. Subsequently, both this mask feature and the output from the backbone, which consists of multiscale features, are forwarded to the SEEM decoder. 
 - In original SEEM this module is kept frozen.
 
-- sdfsdfsdf
+#### 1-2-3 SEEM:
+
+- SEEM is generally a transformer, which takes three things to perform the segmentation task:<br>
+
+  - mask feature
+  - multiscale feature
+  - embedding of grounding sentences
