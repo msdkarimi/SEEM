@@ -18,11 +18,11 @@
 #### 1-2-1 Vision backbone: 
 
 - The FocalNet module, a Feature Pyramid Network, generates multiscale features of the input image. 
-  - In original SEEM this module is kept frozen. 
+- In original SEEM this module is kept frozen. 
 
 #### 1-2-2 Pixel-Decoder:
 
 - The main role of this component is to combine the multiscale features derived from the input image by the backbone and produce a feature termed as the mask feature. Subsequently, both this mask feature and the output from the backbone, which consists of multiscale features, are forwarded to the SEEM decoder. 
-    
+- In original SEEM this module is kept frozen.
 
 - sdfsdfsdf
