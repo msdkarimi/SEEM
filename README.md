@@ -58,8 +58,47 @@
 
 ## 4. Train
 
+    inorther to install requirements:
+
+    pip install -r assets/requirements/requirements.txt
+    pip install -r assets/requirements/requirements_custom.txt
+
+    Pretrained weights:
+
+    https://huggingface.co/xdecoder/SEEM/resolve/main/seem_focall_v1.pt
+
 - Inotder to train the model we need to download pretrained weight of original SEEM
-- pretrained weights should be located in `datasets/xdecoder_data/pretrained` 
+- pretrained weights should be located in `datasets/xdecoder_data/pretrained`
+
+To run train:
+
+    python entry.py train \
+    --conf_files configs/seem/focall_unicl_lang_v1.yaml \
+    --overrides \
+    MODEL.DECODER.LVIS.ENABLED False \
+    TEST.BATCH_SIZE_TOTAL 4 \
+    TRAIN.BATCH_SIZE_TOTAL 2 \
+    TRAIN.BATCH_SIZE_PER_GPU 2 \
+    SOLVER.BASE_LR 0.0001 \
+    SOLVER.FIX_PARAM.backbone True \
+    SOLVER.FIX_PARAM.lang_encoder True \
+    SOLVER.FIX_PARAM.pixel_decoder True \
+    MODEL.DECODER.COST_SPATIAL.CLASS_WEIGHT 5.0 \
+    MODEL.DECODER.COST_SPATIAL.MASK_WEIGHT 2.0 \
+    MODEL.DECODER.COST_SPATIAL.DICE_WEIGHT 2.0 \
+    MODEL.DECODER.TOP_SPATIAL_LAYERS 10 \
+    MODEL.DECODER.SPATIAL.ENABLED True \
+    MODEL.DECODER.GROUNDING.ENABLED True \
+    FIND_UNUSED_PARAMETERS True \
+    ATTENTION_ARCH.SPATIAL_MEMORIES 32 \
+    MODEL.DECODER.SPATIAL.MAX_ITER 5 \
+    ATTENTION_ARCH.QUERY_NUMBER 3 \
+    STROKE_SAMPLER.MAX_CANDIDATE 10 \
+    MODEL.ENCODER.NUM_CLASSES 29 \
+    SOLVER.MAX_NUM_EPOCHS 30 \
+    WEIGHT True \
+    RESUME_FROM datasets/xdecoder_data/pretrained/seem_focall_v1.pt
+
 
   
 
