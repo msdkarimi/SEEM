@@ -48,7 +48,7 @@ def get_prompt_templates():
         'A close-up shot of {} dampened by water.',
         'A snapshot revealing the wet {}.'
     ]
-    prompt_templates_2 = [
+    prompt_templates_seem = [
         '{}.',
         'a photo of a {}.',
         'a bad photo of a {}.',
