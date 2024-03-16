@@ -226,7 +226,8 @@ DATASETS:
 #  TRAIN: ["coco_g_train_umd"]
   # TRAIN: ["coco_2017_train_panoptic_with_sem_seg_caption_grounding",]
   TRAIN: ['coco_2017_train_with_sem_seg_caption_grounding']
-  TEST: ['refcocog_val_leaves_umd']
+  TEST: ['bdd10k_val_sem_seg']
+#  TEST: ['refcocog_val_leaves_umd']
   # TEST: ['coco_my_dataset_val']
   # TEST: ["coco_2017_val_panoptic_with_sem_seg", "pascalvoc_val_Point", "refcocog_val_umd"]  # to evaluate instance and semantic performance as well
   # TEST: ["pascalvoc_val_Point"] # [pascalvoc, openimage600, ade600, davis, cocomini], [Point, Scribble, Polygon, Circle, Box]
