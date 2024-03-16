@@ -37,6 +37,7 @@ from .utils_trainer import UtilsTrainer
 from .utils.misc import *
 from .utils.serialization import JSONEncoder, filter_jsonable
 from datasets.registration.register_refcoco_dataset import register_refcoco
+from datasets.registration.register_bdd100k_semseg import register_all_sunrgbd_seg
 from datasets.registration.register_coco_panoptic_annos_caption_grounding import \
     register_coco_panoptic_annos_caption_grounding_sem_seg
 
@@ -81,10 +82,11 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
                                                                '/content/datasets/xdecoder_data/coco/annotations/caption_class_similarity.pth',
                                                                '/content/datasets/DARE/instances.json',
                                                                )
-        # register_refcoco("coco_g_train_umd", {}, '/content/', 'grounding_my_val.json')
-        # register_refcoco("refcocog_val_leaves_umd", self.get_metadata(), '/content/datasets/leaves_dataset/coco_train2017', '/content/datasets/leaves_dataset/coco_train2017_grounding_gt_json_leaves.json')
-        register_refcoco("refcocog_val_leaves_umd", self.get_metadata(), '/content/datasets/DARE/validation',
-                         '/content/datasets/DARE/validation/DARE_groundings_validation2024_1.json')
+
+        register_all_sunrgbd_seg('/content/datasets/DARE', '/content/datasets/DARE/validation/panoptic/panoptic_validation_gt_DARE.json')
+
+        # register_refcoco("refcocog_val_leaves_umd", self.get_metadata(), '/content/datasets/DARE/validation',
+        #                  '/content/datasets/DARE/validation/DARE_groundings_validation2024_1.json')
 
         from pipeline.XDecoderPipeline import XDecoderPipeline
         self.pipeline = XDecoderPipeline(self.opt)
@@ -494,7 +496,7 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
                 # evaluate and save ckpt every epoch
                 if batch_idx + 1 == self.train_params['updates_per_epoch']:
                     # self.save_checkpoint(self.train_params['num_updates'])
-                    # results = self._eval_on_set(self.save_folder)
+                    results = self._eval_on_set(self.save_folder)
                     # by me
                     self.models['default'].save_pretrained('/content/data/output/test/')
 
