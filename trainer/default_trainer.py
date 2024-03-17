@@ -459,10 +459,10 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
 
                 # logging
                 if prev_optim_steps != current_optim_steps:  # an optimizer update was made
-                    # log_first = self.opt.get("LOG_FIRST", 10)
+                    log_first = self.opt.get("LOG_FIRST", 10)
                     log_first = 2
-                    log_every = 1
-                    # log_every = self.opt.get("LOG_EVERY", 100)
+                    # log_every = 1
+                    log_every = self.opt.get("LOG_EVERY", 10)
                     if (current_optim_steps % log_every == 0) or (
                             epoch == 0 and current_optim_steps <= log_first):  # print logging
 

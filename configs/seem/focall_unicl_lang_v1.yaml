@@ -360,6 +360,7 @@ VOS:
   TEST:
     BATCH_SIZE_TOTAL: 1
 
+
 REF:
   INPUT:
     PIXEL_MEAN: [123.675, 116.280, 103.530]
@@ -376,6 +377,21 @@ REF:
     ASPECT_RATIO_GROUPING: False
   TEST:
     BATCH_SIZE_TOTAL: 8
+
+BDD:
+  INPUT:
+    PIXEL_MEAN: [123.675, 116.280, 103.530]
+    PIXEL_STD: [58.395, 57.120, 57.375]
+    MIN_SIZE_TEST: 800
+    MAX_SIZE_TEST: 1333
+  DATALOADER:
+    FILTER_EMPTY_ANNOTATIONS: False
+    NUM_WORKERS: 8
+    LOAD_PROPOSALS: False
+    SAMPLER_TRAIN: "TrainingSampler"
+    ASPECT_RATIO_GROUPING: False
+  TEST:
+    BATCH_SIZE_TOTAL: 2
 
 # Detectron2 training config for optimizer and lr scheduler
 SOLVER:

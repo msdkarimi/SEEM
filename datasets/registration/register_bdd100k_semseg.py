@@ -9,6 +9,7 @@ import numpy as np
 import os
 import glob
 from typing import List, Tuple, Union
+import json
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.utils.file_io import PathManager
@@ -30,7 +31,7 @@ def load_bdd_instances(name: str, dirname: str, split: str, class_names: Union[L
     """
     # img_folder = os.path.join(dirname, 'images', '10k', split)
     img_folder = os.path.join(dirname, 'images')
-    img_pths = sorted(glob.glob(os.path.join(img_folder, '*.jpg')))
+    img_pths = sorted(glob.glob(os.path.join(img_folder, '*')))
     
     # sem_folder = os.path.join(dirname, 'labels', 'sem_seg', 'masks', split)
     sem_folder = os.path.join(dirname, 'semantic')
@@ -50,7 +51,7 @@ def load_bdd_instances(name: str, dirname: str, split: str, class_names: Union[L
         file_name_WO_ext = file_name.rsplit(".", 1)[0]
 
         the_img = list(filter(lambda imgs: imgs['file_name'].rsplit(".", 1)[0] == file_name_WO_ext, images))
-        _id = the_img['id']
+        _id = the_img[0]['id']
 
         r = {
             "file_name": img_pth,
@@ -84,5 +85,5 @@ def register_all_sunrgbd_seg(root, annots):
         MetadataCatalog.get(name).evaluator_type = "sem_seg"
 
 
-_root = os.getenv("DATASET", "datasets")
-register_all_sunrgbd_seg(_root)
+# _root = os.getenv("DATASET", "datasets")
+# register_all_sunrgbd_seg(_root)
