@@ -78,15 +78,15 @@ class DefaultTrainer(UtilsTrainer, DistributedTrainer):
                                                                '/content/datasets/DARE/panoptic/panoptic_train_gt_DARE.json',
                                                                '/content/datasets/DARE/semantic/',
                                                                '/content/datasets/DARE/DARE_captions_train2024.json',
-                                                               '/content/datasets/DARE/DARE_groundings_train2024.json',
+                                                               '/content/datasets/DARE/DARE_groundings_train_bare2024.json',
                                                                '/content/datasets/xdecoder_data/coco/annotations/caption_class_similarity.pth',
                                                                '/content/datasets/DARE/instances.json',
                                                                )
 
-        register_all_sunrgbd_seg('/content/datasets/DARE', '/content/datasets/DARE/validation/panoptic/panoptic_validation_gt_DARE.json')
+        # register_all_sunrgbd_seg('/content/datasets/DARE', '/content/datasets/DARE/validation/panoptic/panoptic_validation_gt_DARE.json')
 
-        # register_refcoco("refcocog_val_leaves_umd", self.get_metadata(), '/content/datasets/DARE/validation',
-        #                  '/content/datasets/DARE/validation/DARE_groundings_validation2024_1.json')
+        register_refcoco("refcocog_val_leaves_umd", self.get_metadata(), '/content/datasets/DARE/validation/images',
+                         '/content/datasets/DARE/validation/DARE_groundings_test_bare_2024.json')
 
         from pipeline.XDecoderPipeline import XDecoderPipeline
         self.pipeline = XDecoderPipeline(self.opt)

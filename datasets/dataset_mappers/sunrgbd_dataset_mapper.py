@@ -98,7 +98,7 @@ class SunRGBDSegDatasetMapper:
         if self.is_train == False:
             image = self.transform(image)
             image = torch.from_numpy(np.asarray(image).copy())
-            image = image.permute(2,0,1)
+            image = image.permute(2, 0, 1)
             
         semseg = self.read_semseg(semseg_name)
         semseg = torch.from_numpy(semseg.astype(np.int32))
